@@ -2,9 +2,9 @@
   .ar {
     width: 420px;
     font-family: 'Roboto', sans-serif;
-    border-radius: 16px;
-    background-color: #FAFAFA;
-    box-shadow: 0 4px 18px 0 rgba(0,0,0,0.17);
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    /*box-shadow: 0 4px 18px 0 rgba(0,0,0,0.17);*/
     position: relative;
     box-sizing: content-box;
 
@@ -22,7 +22,7 @@
       margin-bottom: 20px;
 
       &__record {
-        width: 320px;
+        width: 390px;
         height: 45px;
         padding: 0 10px;
         margin: 0 auto;
@@ -206,7 +206,6 @@
           @click.native="stopRecorder"/>
       </div>
 
-      <div class="ar-recorder__records-limit" v-if="attempts">Attempts: {{attemptsLeft}}/{{attempts}}</div>
       <div class="ar-recorder__duration">{{recordedTime}}</div>
       <div class="ar-recorder__time-limit" v-if="time">Record duration is limited: {{time}}m</div>
 
@@ -217,30 +216,10 @@
           :key="record.id"
           v-for="(record, idx) in recordList"
           @click="choiceRecord(record)">
-            <div
-              class="ar__rm"
-              v-if="record.id === selected.id"
-              @click="removeRecord(idx)">&times;</div>
-            <div class="ar__text">Record {{idx + 1}}</div>
-            <div class="ar__text">{{record.duration}}</div>
-
-            <downloader
-              v-if="record.id === selected.id && showDownloadButton"
-              class="ar__downloader"
-              :record="record"
-              :filename="filename"/>
-
-            <uploader
-              v-if="record.id === selected.id && showUploadButton"
-              class="ar__uploader"
-              :record="record"
-              :filename="filename"
-              :headers="headers"
-              :upload-url="uploadUrl"/>
+            <audio-player :record="selected" />
         </div>
       </div>
 
-      <audio-player :record="selected"/>
     </div>
   </div>
 </template>
@@ -314,7 +293,9 @@
         if (this.attempts && this.recorder.records.length >= this.attempts) {
           return
         }
-
+        this.recordList=[];
+        this.recorder=this._initRecorder();
+        //this.recorder.recordList=[];
         if (!this.isRecording || (this.isRecording && this.isPause)) {
           this.recorder.start()
         } else {
