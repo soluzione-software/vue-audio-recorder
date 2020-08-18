@@ -270,20 +270,22 @@
       Uploader
     },
     mounted () {
-      this.$eventBus.$on('start-upload', () => {
-        this.isUploading = true
-        this.beforeUpload && this.beforeUpload('before upload')
-      })
+        if(this.$eventBus) {
+            this.$eventBus.$on('start-upload', () => {
+                this.isUploading = true
+                this.beforeUpload && this.beforeUpload('before upload')
+            })
 
-      this.$eventBus.$on('end-upload', (msg) => {
-        this.isUploading = false
+            this.$eventBus.$on('end-upload', (msg) => {
+                this.isUploading = false
 
-        if (msg.status === 'success') {
-          this.successfulUpload && this.successfulUpload(msg.response)
-        } else {
-          this.failedUpload && this.failedUpload(msg.response)
+                if (msg.status === 'success') {
+                    this.successfulUpload && this.successfulUpload(msg.response)
+                } else {
+                    this.failedUpload && this.failedUpload(msg.response)
+                }
+            })
         }
-      })
     },
     beforeDestroy () {
       this.stopRecorder()
