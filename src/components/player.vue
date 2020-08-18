@@ -131,7 +131,7 @@
       })
 
       this.player.addEventListener('timeupdate', this._onTimeUpdate)
-      if(this.$eventBus){
+      if(typeof this.$eventBus  !== "undefined"){
           this.$eventBus.$on('remove-record', () => {
               this._resetProgress()
           })

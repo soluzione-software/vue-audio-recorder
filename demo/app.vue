@@ -35,7 +35,7 @@
     data () {
       return {
         mp3: '/demo/example.mp3',
-        showRecorder: true,
+        showRecorder: false,
         headers: {
           'X-Custom-Header': 'some data'
         }
