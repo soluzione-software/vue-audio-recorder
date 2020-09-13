@@ -341,7 +341,7 @@
         return this.attempts - this.recordList.length
       },
       iconButtonType () {
-        return this.isRecording && this.isPause ? 'mic' : this.isRecording ? 'stop' : 'mic'
+        return this.isRecording && this.isPause ? 'mic' : this.isRecording ? 'pause' : 'mic'
       },
       isPause () {
         return this.recorder.isPause
